@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import {verify} from 'hono/jwt'
-
+import { createPost, updatePost } from '@hawkzharizibam/medium-common';
 
 export const blogRoutes = new Hono<{
 	Bindings: {
@@ -21,7 +21,7 @@ blogRoutes.use('/*',async(c,next) =>{
         c.status(401);
         return c.json({ error: "unauthorized" });
     }
-
+    
     try{
         const payload = await verify(jwt,c.env.JWT_SECRET);
         if(!payload){
@@ -45,6 +45,14 @@ blogRoutes.post('/',async (c:any)=>{
     }).$extends(withAccelerate())
     const userId = c.get('userId');
     const body = await c.req.json();
+    
+    const {success} = createPost.safeParse(body);
+    if(!success){
+      c.status(411);
+      return c.json({
+        error:"Invalid Syntax"
+      });
+    }
     try{
         const post = await prisma.post.create({
             data:{
@@ -71,6 +79,13 @@ blogRoutes.put('/',async(c:any)=>{
     }).$extends(withAccelerate())
     const userId = c.get('userId');
     const body = await c.req.json();
+    const {success}  = updatePost.safeParse(body);
+    if(!success){
+      c.status(411);
+      return c.json({
+        error:"Invalid Syntax"
+      });
+    }
     try{
         const post = await prisma.post.update({
             where:{
