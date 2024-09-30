@@ -18,7 +18,7 @@ exports.createPost = zod_1.default.object({
     content: zod_1.default.string()
 });
 exports.updatePost = zod_1.default.object({
+    id: zod_1.default.string(),
     title: zod_1.default.string(),
-    content: zod_1.default.string(),
-    authorId: zod_1.default.string()
+    content: zod_1.default.string()
 });

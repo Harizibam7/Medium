@@ -24,9 +24,9 @@ export const createPost = z.object({
 export type createPostType = z.infer<typeof createPost>;
 
 export const updatePost = z.object({
+    id:z.string(),
     title:z.string(),
-    content:z.string(),
-    authorId:z.string()
+    content:z.string()
 });
 
 export type updatePostType = z.infer<typeof updatePost>;

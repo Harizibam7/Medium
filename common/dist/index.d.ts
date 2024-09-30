@@ -33,16 +33,16 @@ export declare const createPost: z.ZodObject<{
 }>;
 export type createPostType = z.infer<typeof createPost>;
 export declare const updatePost: z.ZodObject<{
+    id: z.ZodString;
     title: z.ZodString;
     content: z.ZodString;
-    authorId: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     title: string;
     content: string;
-    authorId: string;
+    id: string;
 }, {
     title: string;
     content: string;
-    authorId: string;
+    id: string;
 }>;
 export type updatePostType = z.infer<typeof updatePost>;
